@@ -62,6 +62,8 @@ Implemented:
 - POST /api/auth/signup
 - POST /api/auth/login
 
+<img width="1437" height="670" alt="image" src="https://github.com/user-attachments/assets/28024102-dd16-489d-b1ab-78994405b7ab" />
+
 ### Password Security
 
 Passwords are securely hashed using bcrypt before being stored:
@@ -92,6 +94,9 @@ Using express-validator, I enforced:
   - Special character
 
 This prevents weak credentials and improves overall security.
+
+<img width="1435" height="879" alt="image" src="https://github.com/user-attachments/assets/145533bc-5dec-4c1a-b46e-224e0fc54eff" />
+
 
 ## 2. Database Integration & CRUD
 
@@ -126,11 +131,17 @@ const db = mysql.createConnection({
 
 For updates, I implemented partial update logic so that fields not provided in the request are not overwritten with null values.
 
+<img width="1436" height="836" alt="image" src="https://github.com/user-attachments/assets/58bb890a-9cfa-4350-8ffb-d46d996e9204" />
+
+
 ### Extra Implementation in Database Layer
 
 - Used Promise-based model functions instead of callbacks
 - Isolated database logic inside models
 - Structured service layer so DB changes can be refactored independently
+
+  <img width="1434" height="763" alt="image" src="https://github.com/user-attachments/assets/4f3ea99a-3256-46c0-8623-de0144f60761" />
+
 
 ## 3. JWT Authentication Flow
 
@@ -176,11 +187,11 @@ res.cookie("token", accessToken, {
 
 ### Endpoint That Decrypts the Token
 
-The requirement:
+The requirement to:
 
 Create an API endpoint that decrypts the token and returns authenticated user details.
 
-This is implemented as:
+This was implemented as:
 
 GET /api/user/me
 
@@ -205,6 +216,10 @@ POST /api/auth/refresh
 
 This allows secure session continuation without forcing re-login.
 
+
+<img width="1434" height="681" alt="image" src="https://github.com/user-attachments/assets/402b0e88-6512-4612-b53f-b766fb35e59d" />
+
+
 ### Extra Implementation in JWT Flow
 
 - Centralized JWT creation in utilities
@@ -226,14 +241,9 @@ Applied specifically on:
 
 This prevents brute-force attacks and credential stuffing attempts.
 
-### Modular Utility Design
-
-Instead of writing repeated logic:
-
-- generateToken.js → Handles all JWT creation
-- setAuthCookies.js → Handles cookie security configuration
-
-This improves maintainability and reduces duplication.
+### Use HTTP Only Cookies
+ httpOnly: true 
+- Used HttpOnly cookies instead of localStorage to prevent from XSS attack
 
 ## Additional Design Decisions
 
@@ -242,4 +252,4 @@ This improves maintainability and reduces duplication.
 - Used middleware for authentication
 - Implemented refresh token flow instead of basic JWT
 - Applied security best practices (hashing, validation, rate limiting)
-- Used HttpOnly cookies instead of localStorage
+
